@@ -22,26 +22,29 @@ jobs:
       - name: Step fails
         run: echo fails && exit 1
         
-      - name: Step runs always
+      - name: Step always
         if: always()
         run: echo runs always
         
-      - name: Step could run
+      - name: Step always + outcome.success
         if: ${{ always() && steps.running-step.outcome == 'success' }}
         run: echo runned
 
-      - name: Step could run
+      - name: Step always + outcome.failure
         if: ${{ always() && steps.running-step.outcome == 'failure' }}
         run: echo runned
         
-      - name: Step could run
+      - name: Step !cancelled
         if: ${{ !cancelled() }}
-        run: exit 1
+        run: echo runned
 
-      - name: Step could run
+      - name: Step !cancelled + outcome.success
         if: ${{ !cancelled() && steps.running-step.outcome == 'success' }}
         run: echo runned
         
-      - name: Step could run
+      - name: Step !cancelled + outcome.failure
         if: ${{ !cancelled() && steps.running-step.outcome == 'failure' }}
         run: echo runned
+
+      - name: Step without condition
+        run: echo Bye, Bye!
