@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test-job:
+    name: Test Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Step runs
+        id: running-step
+        run: echo ${{ github.event.pull_request.base.sha }}
+
+      - name: Step fails
+        run: echo fails && exit 1
+        
+      - name: Step always
+        if: always()
+        run: echo runs always
+        
+      - name: Step always + outcome.success
+        if: ${{ always() && steps.running-step.outcome == 'success' }}
+        run: echo runned
+
+      - name: Step always + outcome.failure
+        if: ${{ always() && steps.running-step.outcome == 'failure' }}
+        run: echo runned
+        
+      - name: Step !cancelled
+        if: ${{ !cancelled() }}
+        run: echo runned
+
+      - name: Step !cancelled + outcome.success
+        if: ${{ !cancelled() && steps.running-step.outcome == 'success' }}
+        run: echo runned
+        
+      - name: Step !cancelled + outcome.failure
+        if: ${{ !cancelled() && steps.running-step.outcome == 'failure' }}
+        run: echo runned
+
+      - name: Step without condition
+        run: echo Bye, Bye!
