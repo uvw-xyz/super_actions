@@ -24,8 +24,9 @@ jobs:
           echo ${{ github.event.pull_request.base.sha }}
           ls -lha
           git log -1 ${{ github.event.pull_request.base.sha }}
-          git show remotes/origin/${{ github.event.pull_request.base.sha }}:text.txt
-          git show remotes/origin/main:text.txt
+          git show origin/main:text.txt
+          git show origin/${{ github.event.pull_request.base.sha }}:text.txt
+          
           
 
       - name: Step fails
