@@ -19,7 +19,7 @@ jobs:
         id: running-step
         run: |
           git fetch
-          git branch
+          git branch -a
           echo ${{ github.event.pull_request.base.sha }}
           ls -lha
           git log -1 ${{ github.event.pull_request.base.sha }}
