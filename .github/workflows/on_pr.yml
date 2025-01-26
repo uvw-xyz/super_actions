@@ -24,9 +24,8 @@ jobs:
           echo ${{ github.event.pull_request.base.sha }}
           ls -lha
           git log -1 ${{ github.event.pull_request.base.sha }}
-          git checkout ${{ github.event.pull_request.base.sha }}
-          git show main:text.txt
-          git show ${{ github.event.pull_request.base.sha }}:text.txt
+          git show remotes/origin/main:text.txt
+          git show remotes/origin/${{ github.event.pull_request.base.sha }}:text.txt
 
       - name: Step fails
         run: echo fails && exit 1
