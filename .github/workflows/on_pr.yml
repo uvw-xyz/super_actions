@@ -15,7 +15,10 @@ jobs:
 
       - name: Step runs
         id: running-step
-        run: echo ${{ github.event.pull_request.base.sha }}
+        run: |
+          echo ${{ github.event.pull_request.base.sha }}
+          git log -1 ${{ github.event.pull_request.base.sha }}
+          git show ${{ github.event.pull_request.base.sha }} -- text.txt
 
       - name: Step fails
         run: echo fails && exit 1
